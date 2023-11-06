@@ -25,7 +25,7 @@ const Hex = () => {
   imageUrls.forEach((imageUrl, index) => {
     textureLoader.load(imageUrl, (texture) => {
       const imageMaterial = new THREE.MeshBasicMaterial({ map: texture });
-      const imageGeometry = new THREE.PlaneGeometry(1, 1); // Adjust the size as needed
+      const imageGeometry = new THREE.PlaneGeometry(1, 1); 
       const imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
       imageMesh.position.copy(imagePositions[index]);
       scene.add(imageMesh);
@@ -34,7 +34,7 @@ const Hex = () => {
       const imageTextLabel = new Text();
       imageTextLabel.text = `User ${index + 1}`;
       imageTextLabel.color = 'white';
-      imageTextLabel.fontSize = 0.15; // Adjust the font size
+      imageTextLabel.fontSize = 0.15; 
       imageTextLabel.position.set(imagePositions[index].x, imagePositions[index].y - 0.3, imagePositions[index].z);
       scene.add(imageTextLabel);
     });
@@ -46,32 +46,30 @@ const Hex = () => {
   ];
 
   const additionalImagePositions = [
-    new THREE.Vector3(-1, 2.3, -0.1), // Adjust the position of the third image
+    new THREE.Vector3(-1, 2.3, -0.1), 
     new THREE.Vector3(1.1, 2.3, -0.1),
-    new THREE.Vector3(3, 0, -0.1), // Adjust the position of the fourth image
+    new THREE.Vector3(3, 0, -0.1), 
   ];
 
-  const additionalImageSizes = [.5, 0.5]; // Adjust the sizes of the third and fourth images
-
-  // Load and add additional images to the scene
+  const additionalImageSizes = [.5, 0.5];
+ 
   additionalImageUrls.forEach((imageUrl, index) => {
     textureLoader.load(imageUrl, (texture) => {
       const imageMaterial = new THREE.MeshBasicMaterial({ map: texture });
-      const size = additionalImageSizes[index] || 1; // Use the specified size or default to 1
-      const imageGeometry = new THREE.PlaneGeometry(size, size); // Adjust the size as needed
+      const size = additionalImageSizes[index] || 1; 
+      const imageGeometry = new THREE.PlaneGeometry(size, size); 
       const imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
-      imageMesh.position.copy(additionalImagePositions[index] || new THREE.Vector3(0, 0, -0.1)); // Use the specified position or default
+      imageMesh.position.copy(additionalImagePositions[index] || new THREE.Vector3(0, 0, -0.1)); 
       scene.add(imageMesh);
 
       const imageTextLabel = new Text();
-      // imageTextLabel.text = `Image ${index + 3}`; // Adjust the label
       imageTextLabel.color = 'white';
-      imageTextLabel.fontSize = 0.08; // Adjust the font size
+      imageTextLabel.fontSize = 0.08; 
       imageTextLabel.position.set(
         additionalImagePositions[index]?.x || 0,
         additionalImagePositions[index]?.y || 0,
         additionalImagePositions[index]?.z || -0.1
-      ); // Use the specified position or default
+      );
       scene.add(imageTextLabel);
     });
   });

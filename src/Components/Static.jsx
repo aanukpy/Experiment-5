@@ -6,16 +6,13 @@ const Static = () => {
   const containerRef = useRef();
 
   useEffect(() => {
-    // Create an array to store the image URLs
     const imageUrls = [
       process.env.PUBLIC_URL + "/images/user.png",
       process.env.PUBLIC_URL + "/images/user.png",
     ];
-    // Create an array to store the image positions
     const imagePositions = [
-      new THREE.Vector3(-2, 2, -0.1), // Adjust the position of the first image
-      new THREE.Vector3(2, 2, -0.1), // Adjust the position of the second image
-      
+      new THREE.Vector3(-2, 2, -0.1),
+      new THREE.Vector3(2, 2, -0.1),
     ];
 
     const textureLoader = new THREE.TextureLoader();
@@ -24,7 +21,7 @@ const Static = () => {
     imageUrls.forEach((imageUrl, index) => {
       textureLoader.load(imageUrl, (texture) => {
         const imageMaterial = new THREE.MeshBasicMaterial({ map: texture });
-        const imageGeometry = new THREE.PlaneGeometry(1, 1); // Adjust the size as needed
+        const imageGeometry = new THREE.PlaneGeometry(1, 1); 
         const imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
         imageMesh.position.copy(imagePositions[index]);
         scene.add(imageMesh);
@@ -145,7 +142,6 @@ const Static = () => {
       animate();
     };
 
-    // animateSquare();
 
     const animate = () => {
       requestAnimationFrame(animate);

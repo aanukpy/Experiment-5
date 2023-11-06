@@ -33,7 +33,7 @@ function App() {
             return prevIndex;
           }
         });
-      }, durations[currentComponentIndex]); // Use the duration for the current component
+      }, durations[currentComponentIndex]); 
 
       return () => {
         clearInterval(componentInterval);
