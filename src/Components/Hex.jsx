@@ -9,38 +9,40 @@ const HexagonalScene = () => {
 
 
  const imageUrls = [
-  process.env.PUBLIC_URL + "/images/user.png",
-  process.env.PUBLIC_URL + "/images/user.png",
- 
+  process.env.PUBLIC_URL + "/images/user14.png",
+  process.env.PUBLIC_URL + "/images/user14.png",
 ];
 
- 
-  const imagePositions = [
-    new THREE.Vector3(-2, 2, -0.1), 
-    new THREE.Vector3(2, 2, -0.1), 
-    
-  ];
+const imagePositions = [
+new THREE.Vector3(-2, 2, -0.1), 
+new THREE.Vector3(2, 2, -0.1),
+];
 
-  const textureLoader = new THREE.TextureLoader();
+const textureLoader = new THREE.TextureLoader();
 
-  
-  imageUrls.forEach((imageUrl, index) => {
-    textureLoader.load(imageUrl, (texture) => {
-      const imageMaterial = new THREE.MeshBasicMaterial({ map: texture });
-      const imageGeometry = new THREE.PlaneGeometry(1, 1); 
-      const imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
-      imageMesh.position.copy(imagePositions[index]);
-      scene.add(imageMesh);
+const imageSizes = [.6, 0.6]; // Adjust the sizes as needed
 
-      
-      const imageTextLabel = new Text();
-      imageTextLabel.text = `User ${index + 1}`;
-      imageTextLabel.color = 'white';
-      imageTextLabel.fontSize = 0.15; 
-      imageTextLabel.position.set(imagePositions[index].x, imagePositions[index].y - 0.3, imagePositions[index].z);
-      scene.add(imageTextLabel);
-    });
-  });
+imageUrls.forEach((imageUrl, index) => {
+textureLoader.load(imageUrl, (texture) => {
+  const size = imageSizes[index] || 1.0; // Use the specified size or default to 1.0
+  const imageMaterial = new THREE.MeshBasicMaterial({ map: texture });
+  const imageGeometry = new THREE.PlaneGeometry(size, size); // Adjust the size here
+  const imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
+  imageMesh.position.copy(imagePositions[index]);
+  scene.add(imageMesh);
+
+  const imageTextLabel = new Text();
+  imageTextLabel.text = `User ${index + 1}`;
+  imageTextLabel.color = 'white';
+  imageTextLabel.fontSize = 0.15;
+  imageTextLabel.position.set(
+    imagePositions[index].x-.15,
+    imagePositions[index].y - 0.3,
+    imagePositions[index].z
+  );
+  scene.add(imageTextLabel);
+});
+});
   const additionalImageUrls = [
     process.env.PUBLIC_URL + "/images/smart-contract.png",
     process.env.PUBLIC_URL + "/images/smart-contract.png",
@@ -86,6 +88,14 @@ const HexagonalScene = () => {
  
  renderer.setSize(window.innerWidth/1.2 , window.innerHeight);
  containerRef.current.appendChild(renderer.domElement);
+
+ const headingText = new Text();
+ headingText.text = "User 1 initiate transaction to user 2"; 
+ headingText.color = "white";
+ headingText.fontSize = 0.2; 
+ headingText.position.set(3.5, 2.5, 0);
+
+ scene.add(headingText);
 
 
     const nodes = [];

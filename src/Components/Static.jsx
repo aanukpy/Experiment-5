@@ -6,39 +6,6 @@ const Static = () => {
   const containerRef = useRef();
 
   useEffect(() => {
-    const imageUrls = [
-      process.env.PUBLIC_URL + "/images/user.png",
-      process.env.PUBLIC_URL + "/images/user.png",
-    ];
-    const imagePositions = [
-      new THREE.Vector3(-2, 2, -0.1),
-      new THREE.Vector3(2, 2, -0.1),
-    ];
-
-    const textureLoader = new THREE.TextureLoader();
-
-   
-    imageUrls.forEach((imageUrl, index) => {
-      textureLoader.load(imageUrl, (texture) => {
-        const imageMaterial = new THREE.MeshBasicMaterial({ map: texture });
-        const imageGeometry = new THREE.PlaneGeometry(1, 1); 
-        const imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
-        imageMesh.position.copy(imagePositions[index]);
-        scene.add(imageMesh);
-
-        const imageTextLabel = new Text();
-        imageTextLabel.text = `User ${index + 1}`;
-        imageTextLabel.color = "white";
-        imageTextLabel.fontSize = 0.15;
-        imageTextLabel.position.set(
-          imagePositions[index].x,
-          imagePositions[index].y - 0.3,
-          imagePositions[index].z
-        );
-        scene.add(imageTextLabel);
-      });
-    });
-
     const scene = new THREE.Scene();
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -50,6 +17,50 @@ const Static = () => {
     renderer.setClearColor("black");
     renderer.setSize(window.innerWidth / 1.2, window.innerHeight);
     containerRef.current.appendChild(renderer.domElement);
+    
+    const imageUrls = [
+      process.env.PUBLIC_URL + "/images/user14.png",
+      process.env.PUBLIC_URL + "/images/user14.png",
+    ];
+ 
+  const imagePositions = [
+    new THREE.Vector3(-2, 2, -0.1), 
+    new THREE.Vector3(2, 2, -0.1),
+  ];
+
+  const textureLoader = new THREE.TextureLoader();
+
+  const imageSizes = [.6, 0.6]; // Adjust the sizes as needed
+
+  imageUrls.forEach((imageUrl, index) => {
+    textureLoader.load(imageUrl, (texture) => {
+      const size = imageSizes[index] || 1.0; // Use the specified size or default to 1.0
+      const imageMaterial = new THREE.MeshBasicMaterial({ map: texture });
+      const imageGeometry = new THREE.PlaneGeometry(size, size); // Adjust the size here
+      const imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
+      imageMesh.position.copy(imagePositions[index]);
+      scene.add(imageMesh);
+  
+      const imageTextLabel = new Text();
+      imageTextLabel.text = `User ${index + 1}`;
+      imageTextLabel.color = 'white';
+      imageTextLabel.fontSize = 0.15;
+      imageTextLabel.position.set(
+        imagePositions[index].x-.15,
+        imagePositions[index].y - 0.3,
+        imagePositions[index].z
+      );
+      scene.add(imageTextLabel);
+    });
+  });
+   
+    const headingText = new Text();
+    headingText.text = "User 1 wants to tranfer the money to user 2"; // Change this to your desired heading text
+    headingText.color = "white";
+    headingText.fontSize = 0.2; // Adjust the font size as needed
+    headingText.position.set(3.5, 2.5, 0); // Set your desired X and Y positions
+
+    scene.add(headingText);
 
     const nodes = [];
     const linesGroup = new THREE.Group();

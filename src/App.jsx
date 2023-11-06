@@ -11,8 +11,8 @@ function App() {
   const [inputBoxVisible, setInputBoxVisible] = useState(false);
   const [showStaticComponent, setShowStaticComponent] = useState(true);
 
-  const components = [HexagonalScene, Hex, Hexagonal];
-  const durations = [5000, 10000, 7000]; 
+  const components = [Hex];
+  const durations = [5000, 10000]; 
   const toggleInputBox = () => {
     setInputBoxVisible(true);
   };
