@@ -1,9 +1,16 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { Text } from "troika-three-text";
 import { Html } from "@react-three/drei";
 const Static = () => {
   const containerRef = useRef();
+  const [currentStep, setCurrentStep] = useState(0);
+  const steps = [
+    { text: "Step 1", duration: 2000 },
+    { text: "Step 2", duration: 3000 },
+    { text: "Step 3", duration: 4000 },
+    { text: "Step 4", duration: 5000 },
+  ];
 
   useEffect(() => {
     const scene = new THREE.Scene();
@@ -17,7 +24,7 @@ const Static = () => {
     renderer.setClearColor("black");
     renderer.setSize(window.innerWidth / 1.2, window.innerHeight);
     containerRef.current.appendChild(renderer.domElement);
-    
+   
     const imageUrls = [
       process.env.PUBLIC_URL + "/images/user14.png",
       process.env.PUBLIC_URL + "/images/user14.png",
@@ -30,13 +37,13 @@ const Static = () => {
 
   const textureLoader = new THREE.TextureLoader();
 
-  const imageSizes = [.6, 0.6]; // Adjust the sizes as needed
+  const imageSizes = [.6, 0.6]; 
 
   imageUrls.forEach((imageUrl, index) => {
     textureLoader.load(imageUrl, (texture) => {
-      const size = imageSizes[index] || 1.0; // Use the specified size or default to 1.0
+      const size = imageSizes[index] || 1.0;
       const imageMaterial = new THREE.MeshBasicMaterial({ map: texture });
-      const imageGeometry = new THREE.PlaneGeometry(size, size); // Adjust the size here
+      const imageGeometry = new THREE.PlaneGeometry(size, size); 
       const imageMesh = new THREE.Mesh(imageGeometry, imageMaterial);
       imageMesh.position.copy(imagePositions[index]);
       scene.add(imageMesh);
@@ -54,14 +61,7 @@ const Static = () => {
     });
   });
    
-    const headingText = new Text();
-    headingText.text = "User 1 wants to tranfer the money to user 2"; // Change this to your desired heading text
-    headingText.color = "white";
-    headingText.fontSize = 0.2; // Adjust the font size as needed
-    headingText.position.set(3.5, 2.5, 0); // Set your desired X and Y positions
-
-    scene.add(headingText);
-
+ 
     const nodes = [];
     const linesGroup = new THREE.Group();
 
@@ -161,7 +161,7 @@ const Static = () => {
     };
 
     animate();
-  }, []);
+  },[currentStep]);
 
   return <div ref={containerRef} />;
 };

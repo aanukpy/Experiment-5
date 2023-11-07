@@ -201,68 +201,78 @@ const Hex = () => {
     //send  added block to all nodes
     const numSquares = 5;
     const squareStartNode = 0;
-
+    
     const squares = [];
-
+    
     const createAndAnimateSquaresSimultaneously = () => {
       const squareSpacing = 0.2;
       const animationDuration = 100000;
       const delayBeforeSimultaneousMovement = 6000;
-
+      let animationDone = false;
+    
       const squareGeometries = [];
       const squareMaterials = [];
       const squareTargetPositions = [];
-
+    
       for (let i = 0; i < numSquares; i++) {
         const squareGeometry = new THREE.BoxGeometry(0.2, 0.2, 0.2);
         const squareMaterial = new THREE.MeshBasicMaterial({ color: "blue" });
-
+    
         const targetNodeIndex = (squareStartNode + i + 1) % numNodes;
-
+    
         const targetPosition = nodes[targetNodeIndex].position;
-
+    
         squareGeometries.push(squareGeometry);
         squareMaterials.push(squareMaterial);
         squareTargetPositions.push(targetPosition);
       }
-
+    
       const squareObjects = squareGeometries.map((squareGeometry, index) => {
         const squareMaterial = squareMaterials[index];
         const square = new THREE.Mesh(squareGeometry, squareMaterial);
-
+    
         square.position.copy(nodes[squareStartNode].position);
-
+    
         scene.add(square);
-
+    
         return square;
       });
-
+    
       setTimeout(() => {
         const start = Date.now();
-
+    
         const animateSquaresSimultaneously = () => {
+          if (animationDone) return; // Check if animation is done
+    
           const now = Date.now();
-          const progress = Math.min((now - start) / animationDuration, 1); // Ensure progress is between 0 and 1
-
+    
+          // Calculate the overall progress for all squares
+          const progress = Math.min((now - start) / animationDuration, 1);
+    
           squareObjects.forEach((square, index) => {
             const targetPosition = squareTargetPositions[index];
             square.position.lerp(targetPosition, progress);
           });
-
+    
           if (progress < 1) {
             requestAnimationFrame(animateSquaresSimultaneously);
           } else {
+            // Animation is complete, remove squares from the scene
             squares.push(...squareObjects);
+            squareObjects.forEach((square) => {
+              scene.remove(square);
+              animationDone = true; 
+            });
+            // Set animationDone to true
           }
         };
-
+    
         animateSquaresSimultaneously();
       }, delayBeforeSimultaneousMovement);
     };
-
+    
     createAndAnimateSquaresSimultaneously();
-
-   
+    
     //mined block
     setTimeout(() => {
       const newX = 3;
