@@ -242,11 +242,10 @@ const Hex = () => {
         const start = Date.now();
     
         const animateSquaresSimultaneously = () => {
-          if (animationDone) return; // Check if animation is done
+          if (animationDone) return; 
     
           const now = Date.now();
     
-          // Calculate the overall progress for all squares
           const progress = Math.min((now - start) / animationDuration, 1);
     
           squareObjects.forEach((square, index) => {
@@ -257,13 +256,11 @@ const Hex = () => {
           if (progress < 1) {
             requestAnimationFrame(animateSquaresSimultaneously);
           } else {
-            // Animation is complete, remove squares from the scene
             squares.push(...squareObjects);
             squareObjects.forEach((square) => {
               scene.remove(square);
               animationDone = true; 
             });
-            // Set animationDone to true
           }
         };
     
